@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MyHomePage(),
     );
@@ -15,6 +17,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -22,7 +26,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController totalPalitosController = TextEditingController();
   TextEditingController limitePalitosController = TextEditingController();
-  TextEditingController moveController = TextEditingController(); // Novo controller para a jogada do usuário
+  TextEditingController moveController =
+      TextEditingController(); // Novo controller para a jogada do usuário
   String outputText = "";
   int numberOfPieces = 0;
   int limit = 0;
@@ -40,14 +45,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
     if (numberOfPieces < 2) {
       setState(() {
-        outputText = 'Quantidade de palitos inválida! Informe um valor maior ou igual a 2.\n';
+        outputText =
+            'Quantidade de palitos inválida! Informe um valor maior ou igual a 2.\n';
       });
       return;
     }
 
     if (limit <= 0 || limit >= numberOfPieces) {
       setState(() {
-        outputText = 'Limite de palitos inválido! Informe um valor maior que zero e menor que o total de palitos.\n';
+        outputText =
+            'Limite de palitos inválido! Informe um valor maior que zero e menor que o total de palitos.\n';
       });
       return;
     }
@@ -73,7 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void updateGame(int move) {
     setState(() {
       numberOfPieces -= move;
-      moveHistory.add("Você tirou $move palito(s). Restam $numberOfPieces palitos.");
+      moveHistory
+          .add("Você tirou $move palito(s). Restam $numberOfPieces palitos.");
       if (numberOfPieces == 1) {
         endGame();
       } else {
@@ -91,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
     int computerMove = computerChoosesMove(numberOfPieces, limit);
     setState(() {
       numberOfPieces -= computerMove;
-      moveHistory.add("O computador tirou $computerMove palito(s). Restam $numberOfPieces palitos.");
+      moveHistory.add(
+          "O computador tirou $computerMove palito(s). Restam $numberOfPieces palitos.");
 
       // Voltar para dentro do else
       computerPlay = !computerPlay;
@@ -150,130 +159,132 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            UserAccountsDrawerHeader(
-              accountName: Text('Nicole Carvalho Souza', style: TextStyle(fontSize: 20)),
-              accountEmail: Text('RA: 1431432312019', style: TextStyle(fontSize: 15)), // Adicione o email ou outra informação aqui
-              currentAccountPicture: SizedBox(
-                width: 60, // Largura da imagem definida como 50 pixels
-                height: 60, // Altura da imagem definida como 50 pixels
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage('https://avatars.githubusercontent.com/u/91771078?v=4'), // Substitua pela URL da imagem da web
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: const [
+              UserAccountsDrawerHeader(
+                accountName: Text('Nicole Carvalho Souza',
+                    style: TextStyle(fontSize: 20)),
+                accountEmail: Text('RA: 1431432312019',
+                    style: TextStyle(
+                        fontSize:
+                            15)), // Adicione o email ou outra informação aqui
+                currentAccountPicture: SizedBox(
+                  width: 60, // Largura da imagem definida como 50 pixels
+                  height: 60, // Altura da imagem definida como 50 pixels
+                  child: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                        'https://avatars.githubusercontent.com/u/91771078?v=4'), // Substitua pela URL da imagem da web
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.green, // Cor de fundo do Drawer Header
                 ),
               ),
-              decoration: BoxDecoration(
-                color: Colors.green, // Cor de fundo do Drawer Header
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-      appBar: AppBar(
-        title: Text(
-          'Jogo NIM',
-          style: TextStyle(color: Colors.white)
+        appBar: AppBar(
+          title: const Text('Jogo NIM', style: TextStyle(color: Colors.white)),
+          backgroundColor: Colors.green,
         ),
-        backgroundColor: Colors.green,
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Container(
-              constraints: BoxConstraints(maxWidth: 400),
+        body: SingleChildScrollView(
+            child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Container(
+              constraints: const BoxConstraints(maxWidth: 400),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   TextField(
                     controller: totalPalitosController,
-                    decoration: InputDecoration(labelText: 'Total de palitos? (Maior que 2)'),
+                    decoration: const InputDecoration(
+                        labelText: 'Total de palitos? (Maior que 2)'),
                     keyboardType: TextInputType.number,
                   ),
                   TextField(
                     controller: limitePalitosController,
-                    decoration: InputDecoration(labelText: 'Limite de palitos por jogada? (Maior que 0)'),
+                    decoration: const InputDecoration(
+                        labelText:
+                            'Limite de palitos por jogada? (Maior que 0)'),
                     keyboardType: TextInputType.number,
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.green),
+                            onPressed: startGame,
+                            child: const Text('Iniciar Jogo'),
                           ),
-                          onPressed: startGame,
-                          child: Text('Iniciar Jogo'),
                         ),
-                      ),
-                      SizedBox(height: 15),
-                      SizedBox(
-                        width: double.infinity,
-                        child: TextButton(
-                          style: ButtonStyle(
-                            side: MaterialStateProperty.all<BorderSide>(
-                              BorderSide(color: Colors.green, width: 2.0), // Cor e largura da borda
+                        const SizedBox(height: 15),
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            style: ButtonStyle(
+                              side: MaterialStateProperty.all<BorderSide>(
+                                const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0), // Cor e largura da borda
+                              ),
                             ),
-                          ),
-                          onPressed: restartGame,
-                          child: Text(
-                            'Reiniciar Jogo', 
-                            style: TextStyle(
-                              color: Colors.black,
-                            )
+                            onPressed: restartGame,
+                            child: const Text('Reiniciar Jogo',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                )),
                           ),
                         ),
-                      ),
-                    ]
-                  ),
-                  SizedBox(height: 20),
+                      ]),
+                  const SizedBox(height: 20),
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     color: Colors.green[200],
                     child: Text(
                       outputText,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green
-                      ),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   TextField(
                     controller: moveController,
-                    decoration: InputDecoration(labelText: 'Sua jogada (1 a $limit)'),
+                    decoration:
+                        InputDecoration(labelText: 'Sua jogada (1 a $limit)'),
                     keyboardType: TextInputType.number,
                   ),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green
-                      ),
+                          backgroundColor: Colors.green),
                       onPressed: processUserMove,
-                      child: Text('Enviar Jogada'),
+                      child: const Text('Enviar Jogada'),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Jogadas realizadas',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Container(
                         height: 200,
                         decoration: BoxDecoration(
@@ -286,7 +297,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             return ListTile(
                               title: Text(
                                 moveHistory[index],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
@@ -300,8 +311,6 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-        )
-      )
-    );
+        )));
   }
 }
